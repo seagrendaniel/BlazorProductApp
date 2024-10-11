@@ -158,6 +158,7 @@ BlazorTestApp/
 │
 ├── Server/                # ASP.NET Core backend (API)
 │   ├── Controllers/       # API Controllers
+│   ├── Services/          # API Services and Interfaces
 │   └── Program.cs         # Server entry point
 │
 ├── Shared/                # Shared code between Client and Server
