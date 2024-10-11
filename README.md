@@ -29,6 +29,7 @@ To run this project, you'll need:
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) installed on your machine.
 - A code editor such as [Visual Studio Code](https://code.visualstudio.com/) or [Visual Studio](https://visualstudio.microsoft.com/vs/).
 - [Git](https://git-scm.com/) for version control.
+- (Optional) [SQLite](https://www.sqlite.org/download.html) or other databases (if configured).
 
 ---
 
@@ -40,6 +41,7 @@ To get started with **BlazorTestApp**, first fork the repository and then clone 
 
 1. **Fork the Repository**: Click the "Fork" button at the top right of this repository.
 2. **Clone the Repository**:
+
     ```bash
     git clone https://github.com/seagrendaniel/BlazorTestApp.git
     cd BlazorTestApp
@@ -48,13 +50,74 @@ To get started with **BlazorTestApp**, first fork the repository and then clone 
 ### Project Setup
 
 1. **Restore Packages**: Once cloned, navigate to the project directory and restore the required packages:
+
     ```bash
     dotnet restore
     ```
 
 2. **Build the Solution**: Build the entire project to ensure that all dependencies and projects are correctly compiled:
+
     ```bash
     dotnet build
+    ```
+
+---
+
+## Database Setup (Optional)
+
+If you want to add persistent data storage, follow these instructions to set up the database. Currently, the app runs in-memory, but if needed, you can use **SQLite** or any other database by integrating **Entity Framework Core**.
+
+### Using SQLite
+
+1. **Install EF Core Tools** (if not already installed):
+
+    ```bash
+    dotnet tool install --global dotnet-ef
+    ```
+
+2. **Configure Connection String (Optional)**: By default, the project is configured to use SQLite, and the connection string is located in `Server/appsettings.json`. If you would like to update the connection string in the `appsettings.json`, modify the `Data Source` value:
+    ```json
+    "ConnectionStrings": {
+        "DefaultConnection": "Data Source=BlazorTestApp.db"
+    }
+    ```
+
+3. **Add Migrations**: To set up the database schema, you need to create an initial migration. Navigate to the Server directory and run the following command:
+
+    ```bash
+    dotnet ef migrations add InitialCreate
+    ```
+
+    This will generate the initial migration files.
+
+4. **Update the Database**: Once the migration has been added, apply the migration to create the database:
+
+    ```bash
+    dotnet ef database update
+    ```
+
+    This command will create a file called BlazorTestApp.db in your project directory, which is the SQLite database file.
+
+5. **Verify the Database has been created**: After running the migration, the `BlazorTestApp.db` file should be created. You can use any SQLite tool (such as DB Browser for SQLite) to open this file and verify that the tables have been created.
+
+6. **Additional Commands**: Here are some additional useful commands:
+
+    **Remove Last Migration**: To rollback the most recent migration:
+
+    ```bash
+    dotnet ef migrations remove
+    ```
+
+    **Add New Migrations**: After modifying the model or making other changes to the DB, you can create new migrations by running:
+
+    ```bash
+    dotnet ef migrations add YourMigrationName
+    ```
+
+    **Apply New Migrations**: Once new migrations have been added, apply these migrations by running: 
+
+    ```bash
+    dotnet ef database update
     ```
 
 ---
@@ -120,15 +183,3 @@ BlazorTestApp/
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Contribution Guidelines
-
-If you'd like to contribute to this project:
-
-1. Fork the repository.
-2. Create a new feature branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m 'Add some feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Create a new Pull Request.

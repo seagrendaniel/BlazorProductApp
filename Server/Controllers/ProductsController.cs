@@ -1,7 +1,9 @@
+using BlazorTestApp.Server.Services;
 using BlazorTestApp.Shared;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazorTestApp.Server.Controllers
 {
@@ -9,53 +11,58 @@ namespace BlazorTestApp.Server.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private static List<Product> products = new List<Product>
+        private readonly IProductService _productService;
+
+        public ProductsController(IProductService productService)
         {
-            new Product { Id = Guid.NewGuid(), Name = "Product 1", Quantity = 1, Price = 9.99m },
-            new Product { Id = Guid.NewGuid(), Name = "Product 2", Quantity = 3, Price = 19.99m }
-        };
+            _productService = productService;
+        }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Product>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
+            var products = await _productService.GetProductsAsync();
             return Ok(products);
         }
 
-        [HttpPost]
-        public ActionResult<Product> CreateProduct(Product product)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProduct(Guid id)
         {
-            product.Id = Guid.NewGuid();
-            products.Add(product);
-            return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+                return NotFound();
+
+            return Ok(product);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Product>> CreateProduct(Product product)
+        {
+            var createdProduct = await _productService.CreateProductAsync(product);
+            return CreatedAtAction(nameof(GetProduct), new { id = createdProduct.Id }, createdProduct);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(Guid id, Product updatedProduct)
+        public async Task<IActionResult> UpdateProduct(Guid id, Product product)
         {
-            var product = products.FirstOrDefault(p => p.Id == id);
-            if (product == null)
-            {
+            if (id != product.Id)
+                return BadRequest();
+
+            var success = await _productService.UpdateProductAsync(product);
+            if (!success)
                 return NotFound();
-            }
 
-            product.Name = updatedProduct.Name;
-            product.Quantity = updatedProduct.Quantity;
-            product.Price = updatedProduct.Price;
-
-            return NoContent(); // 204 No Content to indicate the update was successful
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(Guid id)
+        public async Task<IActionResult> DeleteProduct(Guid id)
         {
-            var product = products.FirstOrDefault(p => p.Id == id);
-            if (product == null)
-            {
+            var success = await _productService.DeleteProductAsync(id);
+            if (!success)
                 return NotFound();
-            }
 
-            products.Remove(product);
-            return NoContent(); // 204 No Content to indicate the delete was successful
+            return NoContent();
         }
     }
 }
