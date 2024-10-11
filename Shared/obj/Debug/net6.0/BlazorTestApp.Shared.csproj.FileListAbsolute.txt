@@ -1,0 +1,11 @@
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/bin/Debug/net6.0/BlazorTestApp.Shared.deps.json
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/bin/Debug/net6.0/BlazorTestApp.Shared.dll
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/bin/Debug/net6.0/BlazorTestApp.Shared.pdb
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/BlazorTestApp.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/BlazorTestApp.Shared.AssemblyInfoInputs.cache
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/BlazorTestApp.Shared.AssemblyInfo.cs
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/BlazorTestApp.Shared.csproj.CoreCompileInputs.cache
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/BlazorTestApp.Shared.dll
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/refint/BlazorTestApp.Shared.dll
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/BlazorTestApp.Shared.pdb
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/ref/BlazorTestApp.Shared.dll
