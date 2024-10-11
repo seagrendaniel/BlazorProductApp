@@ -1,9 +1,104 @@
 ﻿@page "/"
+@inject ProductService ProductService
 
-<PageTitle>Index</PageTitle>
+@using BlazorTestApp.Shared
+@using BlazorTestApp.Client.Services
 
-<h1>Hello, world!</h1>
+<h3>Product List</h3>
 
-Welcome to your new app.
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th> <!-- Added a column for Actions (Edit, Delete) -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Quantity</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>
+                    <button class="btn btn-warning" @onclick="() => EditProduct(product)">Edit</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteProduct(product.Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<h3>@(isEditing ? "Edit" : "Add") Product</h3>
+
+<EditForm Model="editingProduct" OnValidSubmit="HandleValidSubmit">
+    <div class="form-group">
+        <label>Name</label>
+        <InputText @bind-Value="editingProduct.Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Quantity</label>
+        <InputNumber @bind-Value="editingProduct.Quantity" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <InputNumber @bind-Value="editingProduct.Price" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">@submitButtonLabel</button>
+</EditForm>
+
+@code {
+    private List<Product> products = new();
+    private Product editingProduct = new();
+    private bool isEditing = false;
+    private string submitButtonLabel = "Add Product";
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetProductsAsync();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (isEditing)
+        {
+            await ProductService.UpdateProductAsync(editingProduct);
+        }
+        else
+        {
+            await ProductService.CreateProductAsync(editingProduct);
+        }
+
+        // Refresh product list
+        products = await ProductService.GetProductsAsync();
+        ResetForm();
+    }
+
+    private void EditProduct(Product product)
+    {
+        isEditing = true;
+        submitButtonLabel = "Update Product";
+        editingProduct = new Product
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Quantity = product.Quantity,
+            Price = product.Price
+        };
+    }
+
+    private async Task DeleteProduct(Guid productId)
+    {
+        await ProductService.DeleteProductAsync(productId);
+        products = await ProductService.GetProductsAsync(); // Reload the product list
+    }
+
+    private void ResetForm()
+    {
+        isEditing = false;
+        submitButtonLabel = "Add Product";
+        editingProduct = new Product(); // Reset the form
+    }
+}

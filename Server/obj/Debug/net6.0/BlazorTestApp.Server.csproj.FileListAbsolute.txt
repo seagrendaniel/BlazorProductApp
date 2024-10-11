@@ -50,3 +50,4 @@
 /Users/danseagren/Code-Stuff/BlazorTestApp/Server/obj/Debug/net6.0/BlazorTestApp.Server.pdb
 /Users/danseagren/Code-Stuff/BlazorTestApp/Server/obj/Debug/net6.0/BlazorTestApp.Server.genruntimeconfig.cache
 /Users/danseagren/Code-Stuff/BlazorTestApp/Server/obj/Debug/net6.0/ref/BlazorTestApp.Server.dll
+/Users/danseagren/Code-Stuff/BlazorTestApp/Server/obj/Debug/net6.0/BlazorTestApp.Server.sourcelink.json

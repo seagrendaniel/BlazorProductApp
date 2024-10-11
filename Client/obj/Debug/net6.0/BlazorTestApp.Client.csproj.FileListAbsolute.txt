@@ -825,3 +825,4 @@
 /Users/danseagren/Code-Stuff/BlazorTestApp/Client/obj/Debug/net6.0/refint/BlazorTestApp.Client.dll
 /Users/danseagren/Code-Stuff/BlazorTestApp/Client/obj/Debug/net6.0/BlazorTestApp.Client.pdb
 /Users/danseagren/Code-Stuff/BlazorTestApp/Client/obj/Debug/net6.0/ref/BlazorTestApp.Client.dll
+/Users/danseagren/Code-Stuff/BlazorTestApp/Client/obj/Debug/net6.0/BlazorTestApp.Client.sourcelink.json

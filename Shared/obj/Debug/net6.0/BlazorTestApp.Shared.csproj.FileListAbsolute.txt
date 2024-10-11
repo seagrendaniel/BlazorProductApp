@@ -9,3 +9,4 @@
 /Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/refint/BlazorTestApp.Shared.dll
 /Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/BlazorTestApp.Shared.pdb
 /Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/ref/BlazorTestApp.Shared.dll
+/Users/danseagren/Code-Stuff/BlazorTestApp/Shared/obj/Debug/net6.0/BlazorTestApp.Shared.sourcelink.json
